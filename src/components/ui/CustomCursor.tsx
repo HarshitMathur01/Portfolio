@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 /**
  * Custom cursor — optimized version.
@@ -10,7 +10,15 @@ import { useEffect, useRef, useState } from 'react';
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const [isTouchDevice, setIsTouchDevice] = useState(true); // default true to avoid flash
+
+  // Compute once (client-only component). This avoids a "no cursor" flash:
+  // we only ever hide the system cursor when this is true.
+  const enabled = useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return !isTouch && !prefersReducedMotion;
+  }, []);
 
   // Spring physics for ring (manual, no framer-motion overhead)
   const ringPos = useRef({ x: -100, y: -100 });
@@ -19,13 +27,14 @@ export default function CustomCursor() {
   const hoverState = useRef<'default' | 'link' | 'project'>('default');
 
   useEffect(() => {
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    setIsTouchDevice(isTouch);
-    if (isTouch) return;
+    if (!enabled) return;
+
+    // Only now do we hide the system cursor (CSS is gated by this class).
+    document.documentElement.classList.add('custom-cursor');
 
     const dot = dotRef.current;
     const ring = ringRef.current;
-    if (!dot || !ring) return;
+    if (!dot || !ring) return () => { document.documentElement.classList.remove('custom-cursor'); };
 
     // Make cursor visible once first mouse movement is detected
     let hasMovedOnce = false;
@@ -102,10 +111,11 @@ export default function CustomCursor() {
       document.removeEventListener('mouseenter', onEnter);
       document.removeEventListener('mouseleave', onLeave);
       cancelAnimationFrame(rafRef.current);
+      document.documentElement.classList.remove('custom-cursor');
     };
-  }, []);
+  }, [enabled]);
 
-  if (isTouchDevice) return null;
+  if (!enabled) return null;
 
   return (
     <>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import SectionLabel from '@/components/ui/SectionLabel';
 import TextReveal from '@/components/ui/TextReveal';
 import { stats, startup } from '@/lib/data';
+import Image from 'next/image';
 
 function useInView(ref: React.RefObject<HTMLElement | null>, threshold = 0.1) {
   const [inView, setInView] = useState(false);
@@ -131,59 +132,109 @@ export default function About() {
         </div>
 
         {/* Right: Stats Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '1px',
-            background: 'var(--border-subtle)',
-            border: '1px solid var(--border-subtle)',
-            opacity: inView ? 1 : 0,
-            transform: inView ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s',
-          }}
-        >
-          {stats.map((stat, i) => (
-            <div
-              key={i}
+        <div className="about-right">
+          {/* Portrait card */}
+          <div
+            className="about-portrait card-surface"
+            style={{
+              position: 'relative',
+              overflow: 'hidden',
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(18px)',
+              transition: 'opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s',
+            }}
+          >
+            <div className="scanline-overlay" />
+            <Image
+              src="/photo-hm.jpg"
+              alt="Harshit Mathur"
+              width={900}
+              height={1100}
+              priority={false}
               style={{
-                background: 'var(--bg-surface)',
-                padding: '1.5rem 1rem',
-                textAlign: 'center',
-                transition: 'background 0.3s ease',
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+                filter: 'saturate(0.95) contrast(1.05)',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-elevated)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'var(--bg-surface)'}
+            />
+
+            {/* Subtle corner label */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '0.9rem',
+                bottom: '0.9rem',
+                fontFamily: 'var(--font-space-mono), monospace',
+                fontSize: '0.6rem',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: 'var(--text-muted)',
+                background: 'rgba(2, 4, 8, 0.55)',
+                border: '1px solid var(--border-subtle)',
+                padding: '0.35rem 0.55rem',
+                backdropFilter: 'blur(10px)',
+              }}
             >
-              <div
-                style={{
-                  fontFamily: 'var(--font-syne), sans-serif',
-                  fontSize: '1.8rem',
-                  fontWeight: 800,
-                  color: 'var(--neon-cyan)',
-                  marginBottom: '0.25rem',
-                }}
-              >
-                <CountUp
-                  target={stat.value}
-                  decimals={stat.decimals || 0}
-                  suffix={stat.suffix || ''}
-                  inView={inView}
-                />
-              </div>
-              <div
-                style={{
-                  fontFamily: 'var(--font-space-mono), monospace',
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.12em',
-                  color: 'var(--text-muted)',
-                  textTransform: 'uppercase',
-                }}
-              >
-                {stat.label}
-              </div>
+              ID: HM // SIGNAL OK
             </div>
-          ))}
+          </div>
+
+          {/* Stats Grid */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '1px',
+              background: 'var(--border-subtle)',
+              border: '1px solid var(--border-subtle)',
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s',
+            }}
+          >
+            {stats.map((stat, i) => (
+              <div
+                key={i}
+                style={{
+                  background: 'var(--bg-surface)',
+                  padding: '1.5rem 1rem',
+                  textAlign: 'center',
+                  transition: 'background 0.3s ease',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-elevated)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'var(--bg-surface)'}
+              >
+                <div
+                  style={{
+                    fontFamily: 'var(--font-syne), sans-serif',
+                    fontSize: '1.8rem',
+                    fontWeight: 800,
+                    color: 'var(--neon-cyan)',
+                    marginBottom: '0.25rem',
+                  }}
+                >
+                  <CountUp
+                    target={stat.value}
+                    decimals={stat.decimals || 0}
+                    suffix={stat.suffix || ''}
+                    inView={inView}
+                  />
+                </div>
+                <div
+                  style={{
+                    fontFamily: 'var(--font-space-mono), monospace',
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.12em',
+                    color: 'var(--text-muted)',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -287,6 +338,17 @@ export default function About() {
       </div>
 
       <style jsx>{`
+        .about-right {
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+        }
+
+        .about-portrait {
+          border-color: rgba(0, 229, 255, 0.15);
+          box-shadow: 0 0 24px rgba(0, 229, 255, 0.06);
+        }
+
         @media (max-width: 768px) {
           .about-grid {
             grid-template-columns: 1fr !important;

@@ -65,12 +65,31 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hide default cursor on desktop */
+/* Media defaults — prevent overflow on small screens */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Avoid flex/grid children causing horizontal overflow */
+*,
+*::before,
+*::after {
+  min-width: 0;
+}
+
+/* Hide default cursor only when custom cursor is enabled */
 @media (hover: hover) and (pointer: fine) {
-  body {
-    cursor: none;
-  }
-  a, button, [role="button"], input, textarea, select, label {
+  html.custom-cursor,
+  html.custom-cursor body,
+  html.custom-cursor a,
+  html.custom-cursor button,
+  html.custom-cursor [role="button"],
+  html.custom-cursor input,
+  html.custom-cursor textarea,
+  html.custom-cursor select,
+  html.custom-cursor label {
     cursor: none;
   }
 }
@@ -442,6 +461,17 @@ body {
   will-change: auto;
 }
 
+@media (max-width: 768px) {
+  .status-bar {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    max-width: calc(100vw - 2rem);
+  }
+}
+
 /* ─── MOBILE MENU OVERLAY ──────────────────────── */
 
 .mobile-menu-overlay {
@@ -506,6 +536,18 @@ body {
   background: var(--bg-surface);
   transition: all 0.3s ease;
   padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .hex-node {
+    width: 88px;
+    height: 88px;
+    padding: 0.75rem;
+  }
+
+  .hex-node span {
+    font-size: 0.6rem;
+  }
 }
 
 .hex-node::before {

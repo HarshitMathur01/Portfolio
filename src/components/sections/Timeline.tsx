@@ -100,7 +100,7 @@ export default function Timeline() {
         Experience Log
       </TextReveal>
 
-      <div style={{ position: 'relative', paddingLeft: '3rem' }}>
+      <div className="timeline-wrap" style={{ position: 'relative', paddingLeft: '3rem' }}>
         {/* Animated vertical line */}
         <div
           ref={lineRef}
@@ -250,6 +250,14 @@ export default function Timeline() {
           </div>
         ))}
       </div>
+
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .timeline-wrap {
+            padding-left: 2.25rem !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

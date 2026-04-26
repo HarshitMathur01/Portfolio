@@ -2,7 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   turbopack: {
-    root: '.', // Silence the "multiple lockfiles" warning from Turbopack
+    // Turbopack expects an absolute path for `root`.
+    // Using `process.cwd()` avoids internal warnings/panics in some environments.
+    root: process.cwd(),
   },
 };
 

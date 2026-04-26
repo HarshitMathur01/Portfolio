@@ -244,6 +244,7 @@ export default function Skills() {
       </p>
 
       <div
+        className="skills-canvas-wrap"
         style={{
           position: 'relative',
           width: '100%',
@@ -324,6 +325,9 @@ export default function Skills() {
 
       <style jsx>{`
         @media (max-width: 768px) {
+          .skills-canvas-wrap {
+            display: none !important;
+          }
           .skills-hex-fallback {
             display: block !important;
           }

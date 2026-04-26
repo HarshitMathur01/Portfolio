@@ -43,7 +43,7 @@ export default function Navbar() {
           left: 0,
           right: 0,
           zIndex: 1000,
-          padding: '1rem 2rem',
+          padding: '0.9rem clamp(1rem, 4vw, 2rem)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -59,7 +59,7 @@ export default function Navbar() {
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           style={{
             fontFamily: 'var(--font-space-mono), monospace',
-            fontSize: '1.2rem',
+            fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
             color: 'var(--neon-cyan)',
             textDecoration: 'none',
             fontWeight: 'bold',
@@ -142,7 +142,7 @@ export default function Navbar() {
               onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }}
               style={{
                 fontFamily: 'var(--font-syne), sans-serif',
-                fontSize: '2rem',
+                fontSize: 'clamp(1.6rem, 6vw, 2.2rem)',
                 fontWeight: 700,
                 color: 'var(--text-primary)',
                 textDecoration: 'none',

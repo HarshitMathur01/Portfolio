@@ -20,11 +20,9 @@ const HeroCanvas = dynamic(() => import('@/components/three/HeroCanvas'), {
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [mounted, setMounted] = useState(false);
   const [animStage, setAnimStage] = useState(0);
 
   useEffect(() => {
-    setMounted(true);
     const timers: NodeJS.Timeout[] = [];
     timers.push(setTimeout(() => setAnimStage(1), 400));  // name appears
     timers.push(setTimeout(() => setAnimStage(2), 1000)); // tagline
@@ -54,6 +52,7 @@ export default function Hero() {
 
       {/* Corner coordinate */}
       <div
+        className="hero-corner"
         style={{
           position: 'absolute',
           top: '6rem',
@@ -70,6 +69,7 @@ export default function Hero() {
 
       {/* GHOST DECORATIVE ELEMENT — fills the dead right side */}
       <div
+        className="hero-ghost"
         style={{
           position: 'absolute',
           right: 'clamp(2rem, 8vw, 10%)',
@@ -84,7 +84,7 @@ export default function Hero() {
           zIndex: 1,
           pointerEvents: 'none',
           userSelect: 'none',
-          opacity: mounted && animStage >= 1 ? 1 : 0,
+          opacity: animStage >= 1 ? 1 : 0,
           transition: 'opacity 2s ease 0.5s',
         }}
       >
@@ -124,8 +124,8 @@ export default function Hero() {
             color: 'var(--neon-cyan)',
             textTransform: 'uppercase',
             marginBottom: '1.5rem',
-            opacity: mounted && animStage >= 1 ? 1 : 0,
-            transform: mounted && animStage >= 1 ? 'translateY(0)' : 'translateY(10px)',
+            opacity: animStage >= 1 ? 1 : 0,
+            transform: animStage >= 1 ? 'translateY(0)' : 'translateY(10px)',
             transition: 'opacity 0.6s ease, transform 0.6s ease',
           }}
         >
@@ -137,8 +137,8 @@ export default function Hero() {
           <span
             style={{
               display: 'block',
-              opacity: mounted && animStage >= 1 ? 1 : 0,
-              transform: mounted && animStage >= 1 ? 'translateY(0)' : 'translateY(40px)',
+              opacity: animStage >= 1 ? 1 : 0,
+              transform: animStage >= 1 ? 'translateY(0)' : 'translateY(40px)',
               transition: 'opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s',
             }}
           >
@@ -147,8 +147,8 @@ export default function Hero() {
           <span
             style={{
               display: 'block',
-              opacity: mounted && animStage >= 1 ? 1 : 0,
-              transform: mounted && animStage >= 1 ? 'translateY(0)' : 'translateY(40px)',
+              opacity: animStage >= 1 ? 1 : 0,
+              transform: animStage >= 1 ? 'translateY(0)' : 'translateY(40px)',
               transition: 'opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s',
             }}
           >
@@ -166,8 +166,8 @@ export default function Hero() {
             marginBottom: '1.5rem',
             maxWidth: '600px',
             lineHeight: 1.5,
-            opacity: mounted && animStage >= 2 ? 1 : 0,
-            transform: mounted && animStage >= 2 ? 'translateY(0)' : 'translateY(15px)',
+            opacity: animStage >= 2 ? 1 : 0,
+            transform: animStage >= 2 ? 'translateY(0)' : 'translateY(15px)',
             transition: 'opacity 0.6s ease, transform 0.6s ease',
           }}
         >
@@ -184,7 +184,7 @@ export default function Hero() {
             lineHeight: 1.8,
             marginBottom: '2.5rem',
             minHeight: '4rem',
-            opacity: mounted && animStage >= 3 ? 1 : 0,
+            opacity: animStage >= 3 ? 1 : 0,
             transition: 'opacity 0.4s ease',
           }}
         >
@@ -202,8 +202,8 @@ export default function Hero() {
             display: 'flex',
             gap: '1rem',
             flexWrap: 'wrap',
-            opacity: mounted && animStage >= 4 ? 1 : 0,
-            transform: mounted && animStage >= 4 ? 'scale(1)' : 'scale(0.95)',
+            opacity: animStage >= 4 ? 1 : 0,
+            transform: animStage >= 4 ? 'scale(1)' : 'scale(0.95)',
             transition: 'opacity 0.5s ease, transform 0.5s ease',
           }}
         >
@@ -227,6 +227,7 @@ export default function Hero() {
 
       {/* Scroll indicator — right edge */}
       <div
+        className="hero-scroll-indicator"
         style={{
           position: 'absolute',
           right: '2rem',
@@ -236,7 +237,7 @@ export default function Hero() {
           alignItems: 'center',
           gap: '0.5rem',
           zIndex: 5,
-          opacity: mounted && animStage >= 4 ? 0.5 : 0,
+          opacity: animStage >= 4 ? 0.5 : 0,
           transition: 'opacity 1s ease',
         }}
       >
@@ -263,6 +264,7 @@ export default function Hero() {
 
       {/* Bottom control panel readout */}
       <div
+        className="hero-readout"
         style={{
           position: 'absolute',
           bottom: '1.5rem',
@@ -286,6 +288,27 @@ export default function Hero() {
           </span>
         ))}
       </div>
+
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .hero-corner {
+            top: 5rem !important;
+            left: 1rem !important;
+          }
+
+          .hero-ghost {
+            display: none !important;
+          }
+
+          .hero-scroll-indicator {
+            display: none !important;
+          }
+
+          .hero-readout {
+            display: none !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

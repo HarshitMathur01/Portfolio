@@ -1,26 +1,595 @@
-@import "tailwindcss";
+/* Design System — no external CSS framework */
+
+/* ═══════════════════════════════════════════════════
+   HARSHIT MATHUR PORTFOLIO — DESIGN SYSTEM
+   Sci-Fi Command Center Aesthetic
+   ═══════════════════════════════════════════════════ */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Backgrounds ─────────────────────────────── */
+  --bg-void: #020408;
+  --bg-surface: #080d14;
+  --bg-elevated: #0d1520;
+  --grid-line: #0a1628;
+
+  /* ── Accent Palette ─────────────────────────── */
+  /* Primary: Cyan (interaction, links, focus)     */
+  --neon-cyan: #00e5ff;
+  /* Secondary: Teal-green (status, success, live) */
+  --neon-green: #34d399;
+  /* Tertiary: Purple (badges, tags, decorative)   */
+  --neon-purple: #7b2fff;
+  /* Warm accent: Amber (achievements, trophies)   */
+  --neon-amber: #f59e0b;
+
+  /* ── Text Hierarchy ─────────────────────────── */
+  /* Primary: Headlines + body (≥7:1 contrast)     */
+  --text-primary: #e8f4f8;
+  /* Secondary: Paragraphs + descriptions (≥4.5:1) */
+  --text-secondary: #8ba4b4;
+  /* Muted: Metadata, captions, labels (≥3.5:1)    */
+  --text-muted: #5e7a8a;
+  /* Dim: Decorative numbering + coordinates (≥2.5:1) */
+  --text-dim: #3a5568;
+
+  /* ── Glows (used sparingly on hover/focus) ───── */
+  --glow-cyan: rgba(0, 229, 255, 0.15);
+  --glow-green: rgba(52, 211, 153, 0.12);
+  --glow-purple: rgba(123, 47, 255, 0.12);
+
+  /* ── Borders ────────────────────────────────── */
+  --border-subtle: rgba(0, 229, 255, 0.08);
+  --border-active: rgba(0, 229, 255, 0.4);
+
+  /* ── Spacing ────────────────────────────────── */
+  --section-padding: clamp(4rem, 10vw, 8rem);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── BASE RESETS ──────────────────────────────── */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide default cursor on desktop */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, [role="button"], input, textarea, select, label {
+    cursor: none;
+  }
+}
+
+::selection {
+  background: var(--neon-cyan);
+  color: var(--bg-void);
+}
+
+/* ─── CUSTOM SCROLLBAR ─────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neon-cyan);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--neon-cyan) 80%, white 20%);
+}
+
+/* ─── GLOBAL DOT-GRID OVERLAY ──────────────────── */
+
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    radial-gradient(circle, var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.25;
+  will-change: transform;
+  contain: strict;
+}
+
+/* ─── SCANLINE OVERLAY ─────────────────────────── */
+
+.scanline-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 229, 255, 0.008) 2px,
+    rgba(0, 229, 255, 0.008) 4px
+  );
+}
+
+/* ─── GLITCH EFFECT ────────────────────────────── */
+
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.glitch.active::before {
+  animation: glitch-1 0.3s ease-in-out;
+  color: var(--neon-cyan);
+  z-index: -1;
+}
+
+.glitch.active::after {
+  animation: glitch-2 0.3s ease-in-out;
+  color: var(--neon-purple);
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0%, 100% { opacity: 0; transform: translate(0); clip-path: inset(0 0 0 0); }
+  20% { opacity: 0.8; transform: translate(-3px, 2px); clip-path: inset(20% 0 60% 0); }
+  40% { opacity: 0.6; transform: translate(3px, -2px); clip-path: inset(40% 0 20% 0); }
+  60% { opacity: 0.9; transform: translate(-2px, -1px); clip-path: inset(60% 0 10% 0); }
+  80% { opacity: 0.4; transform: translate(2px, 1px); clip-path: inset(10% 0 80% 0); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { opacity: 0; transform: translate(0); clip-path: inset(0 0 0 0); }
+  20% { opacity: 0.6; transform: translate(3px, -2px); clip-path: inset(60% 0 20% 0); }
+  40% { opacity: 0.8; transform: translate(-3px, 2px); clip-path: inset(10% 0 70% 0); }
+  60% { opacity: 0.4; transform: translate(2px, 1px); clip-path: inset(30% 0 40% 0); }
+  80% { opacity: 0.7; transform: translate(-2px, -1px); clip-path: inset(70% 0 5% 0); }
+}
+
+/* ─── GLOW ANIMATIONS ──────────────────────────── */
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px var(--neon-green), 0 0 10px rgba(52, 211, 153, 0.3); }
+  50% { box-shadow: 0 0 10px var(--neon-green), 0 0 20px rgba(52, 211, 153, 0.5); }
+}
+
+@keyframes pulse-cyan {
+  0%, 100% { box-shadow: 0 0 5px var(--neon-cyan), 0 0 10px rgba(0, 229, 255, 0.2); }
+  50% { box-shadow: 0 0 15px var(--neon-cyan), 0 0 30px rgba(0, 229, 255, 0.4); }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes scroll-arrow {
+  0% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.5; }
+  100% { transform: translateY(16px); opacity: 0; }
+}
+
+@keyframes scanMove {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100vw); }
+}
+
+@keyframes progress-fill {
+  0% { width: 0%; }
+  100% { width: 55%; }
+}
+
+/* ─── CURSOR BLINKING ──────────────────────────── */
+
+.cursor-blink::after {
+  content: '_';
+  animation: blink 1s infinite;
+  color: var(--neon-cyan);
+}
+
+/* ─── SECTION TRANSITION LINE ──────────────────── */
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--neon-cyan) 20%,
+    var(--neon-cyan) 80%,
+    transparent 100%
+  );
+  opacity: 0.15;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Removed continuously-animating ::after element — was causing
+   GPU compositing for every section divider on page, eating frames. */
+
+/* ─── NAV LINK UNDERLINE ───────────────────────── */
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--neon-cyan);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 6px var(--neon-cyan);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link:hover {
+  color: var(--neon-cyan);
+}
+
+/* ─── BUTTON HOVER FILL ────────────────────────── */
+
+.cta-button {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-active);
+  background: transparent;
+  color: var(--neon-cyan);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.4s ease, border-color 0.4s ease;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--neon-cyan);
+  transition: left 0.4s ease;
+  z-index: -1;
+}
+
+.cta-button:hover {
+  color: var(--bg-void);
+  border-color: var(--neon-cyan);
+}
+
+.cta-button:hover::before {
+  left: 0;
+}
+
+.cta-button:hover .cta-icon {
+  transform: translateX(4px);
+}
+
+.cta-icon {
+  transition: transform 0.3s ease;
+}
+
+/* ─── CARD STYLES ──────────────────────────────── */
+
+.card-surface {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-surface:hover {
+  border-color: var(--border-active);
+  box-shadow: 0 0 20px var(--glow-cyan);
+}
+
+/* ─── TECH PILL ────────────────────────────────── */
+
+.tech-pill {
+  padding: 0.3rem 0.75rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.tech-pill:hover {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--glow-cyan);
+}
+
+/* ─── INPUT STYLES ─────────────────────────────── */
+
+.terminal-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.85rem;
+  padding: 0.75rem 0;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.terminal-input:focus {
+  border-bottom-color: var(--neon-cyan);
+  box-shadow: 0 2px 10px var(--glow-cyan);
+}
+
+.terminal-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ─── PRELOADER ────────────────────────────────── */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg-void);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.matrix-char {
+  position: absolute;
+  color: var(--neon-green);
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 14px;
+  opacity: 0;
+  animation: matrix-fall linear forwards;
+}
+
+@keyframes matrix-fall {
+  0% { opacity: 0; transform: translateY(-20px); }
+  10% { opacity: 1; }
+  90% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(100vh); }
+}
+
+/* ─── KONAMI TERMINAL ──────────────────────────── */
+
+.konami-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #000;
+  padding: 2rem;
+  overflow-y: auto;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  color: var(--neon-green);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* ─── STATUS BAR ───────────────────────────────── */
+
+.status-bar {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  padding: 0.5rem 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  contain: layout;
+  will-change: auto;
+}
+
+/* ─── MOBILE MENU OVERLAY ──────────────────────── */
+
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(2, 4, 8, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  contain: layout;
+}
+
+/* ─── REDUCED MOTION ───────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── RESPONSIVE TYPOGRAPHY ────────────────────── */
+
+.hero-heading {
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.section-heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* ─── HEXAGONAL GRID (SKILLS) ──────────────────── */
+
+.hex-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+.hex-node {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: var(--bg-surface);
+  transition: all 0.3s ease;
+  padding: 1rem;
+}
+
+.hex-node::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: var(--bg-elevated);
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.hex-node:hover {
+  transform: scale(1.15);
+  background: var(--neon-cyan);
+  box-shadow: 0 0 30px var(--glow-cyan);
+}
+
+.hex-node:hover::before {
+  background: var(--bg-surface);
+}
+
+.hex-node span {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.hex-node:hover span {
+  color: var(--bg-void);
+}
+
+/* ─── COMMAND PALETTE ──────────────────────────── */
+
+.command-palette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(2, 4, 8, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20vh;
+}
+
+.command-palette {
+  width: 90%;
+  max-width: 560px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-active);
+  box-shadow: 0 0 40px var(--glow-cyan), 0 25px 50px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.command-palette input {
+  width: 100%;
+  background: var(--bg-elevated);
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 1rem;
+  padding: 1rem 1.25rem;
+  outline: none;
+}
+
+.command-palette-item {
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: background 0.15s ease;
+  cursor: pointer;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.command-palette-item:hover,
+.command-palette-item.active {
+  background: var(--bg-elevated);
+  color: var(--neon-cyan);
 }

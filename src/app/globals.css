@@ -52,6 +52,18 @@
      mobile: 480px
      small-tablet: 768px
      tablet: 1024px */
+
+  /* ── Type & spacing tokens ──────────────────── */
+  --text-hero: clamp(3.25rem, 1.25rem + 8vw, 9rem);
+  --text-h2: clamp(2rem, 1rem + 3.5vw, 3.5rem);
+  --text-body: 1rem;
+
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
 }
 
 /* ─── BASE RESETS ──────────────────────────────── */
@@ -64,6 +76,8 @@
 
 html {
   scroll-behavior: auto; /* Lenis handles smooth scroll */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -192,6 +206,8 @@ video {
 
 .glitch {
   position: relative;
+  display: inline-block;
+  max-inline-size: 100%;
 }
 
 .glitch::before,
@@ -541,28 +557,48 @@ video {
 /* ─── RESPONSIVE TYPOGRAPHY ────────────────────── */
 
 .hero-heading {
-  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-size: var(--text-hero);
   font-weight: 800;
   line-height: 0.95;
   letter-spacing: -0.03em;
+  max-inline-size: 100%;
 }
 
 .section-heading {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: var(--text-h2);
   font-weight: 700;
   line-height: 1.1;
 }
 
 @media (max-width: 480px) {
   .hero-heading {
-    font-size: clamp(2.6rem, 14vw, 4.6rem);
+    /* Always fit 2 lines on very narrow phones */
+    font-size: clamp(1.6rem, 9vw, 2.7rem);
     line-height: 0.98;
+    letter-spacing: -0.055em;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
   }
 
   .cta-button {
     width: 100%;
     justify-content: center;
+    min-height: 44px;
   }
+}
+
+@media (max-width: 360px) {
+  .hero-heading {
+    font-size: clamp(1.55rem, 8.6vw, 2.4rem);
+    letter-spacing: -0.06em;
+  }
+}
+
+/* Hero viewport sizing (safe on mobile toolbars) */
+.hero-section {
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
 /* ─── HEXAGONAL GRID (SKILLS) ──────────────────── */

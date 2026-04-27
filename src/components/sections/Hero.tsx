@@ -35,20 +35,20 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="hero"
+      className="hero-section"
       style={{
         position: 'relative',
-        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        overflow: 'hidden',
+        overflow: 'visible',
       }}
     >
-      {/* Three.js Canvas Background */}
-      <HeroCanvas />
-
-      {/* Scanline overlay */}
-      <div className="scanline-overlay" />
+      {/* Background layers (clipped) */}
+      <div className="hero-bg">
+        <HeroCanvas />
+        <div className="scanline-overlay" />
+      </div>
 
       {/* Corner coordinate */}
       <div
@@ -111,7 +111,7 @@ export default function Hero() {
         style={{
           position: 'relative',
           zIndex: 5,
-          padding: '0 clamp(2rem, 8vw, 10%)',
+          padding: '0 var(--page-x-padding)',
           maxWidth: '1400px',
         }}
       >
@@ -290,6 +290,14 @@ export default function Hero() {
       </div>
 
       <style jsx>{`
+        .hero-bg {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          overflow: hidden;
+          pointer-events: none;
+        }
+
         @media (max-width: 768px) {
           .hero-corner {
             top: 5rem !important;

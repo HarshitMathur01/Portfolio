@@ -128,7 +128,7 @@ export const navItems = [
 
 export const stats = [
   { value: 8.91, label: "CGPA", decimals: 2 },
-  { value: 500, label: "PROBLEMS", suffix: "+" },
+  { value: 600, label: "PROBLEMS", suffix: "+" },
   { value: 3, label: "HACKATHON WINS" },
   { value: 1461, label: "CF RATING" },
   { value: 3, label: "CODECHEF", suffix: "★" },

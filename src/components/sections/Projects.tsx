@@ -132,7 +132,7 @@ function ProjectCard({ project, index, inView }: {
 
   return (
     <div
-      className="cursor-hover-project"
+      className="cursor-hover-project project-card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -316,10 +316,13 @@ function ProjectCard({ project, index, inView }: {
       </div>
 
       <style jsx>{`
-        @media (max-width: 768px) {
-          div[style*="gridTemplateColumns"] {
+        @media (max-width: 1024px) {
+          .project-card {
             grid-template-columns: 1fr !important;
           }
+        }
+
+        @media (max-width: 768px) {
           .project-thumbnail {
             min-height: 120px !important;
             border-left: none !important;

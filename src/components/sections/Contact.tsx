@@ -394,20 +394,23 @@ export default function Contact() {
 
       {/* Footer — full-width with visual closure */}
       <footer
+        className="site-footer"
         style={{
           borderTop: '1px solid var(--border-subtle)',
-          padding: 'clamp(2rem, 4vw, 3rem) clamp(2rem, 8vw, 10%)',
-          maxWidth: '1400px',
-          margin: '0 auto',
+          background: 'linear-gradient(180deg, rgba(8, 13, 20, 0.0) 0%, rgba(8, 13, 20, 0.55) 40%, rgba(8, 13, 20, 0.75) 100%)',
+          padding: 'clamp(2rem, 4vw, 3rem) var(--page-x-padding)',
         }}
       >
         <div
+          className="site-footer-inner"
           style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             flexWrap: 'wrap',
             gap: '1rem',
+            maxWidth: '1400px',
+            margin: '0 auto',
           }}
         >
           {/* Left: Copyright */}
@@ -463,10 +466,24 @@ export default function Contact() {
       </footer>
 
       <style jsx>{`
+        .site-footer-inner {
+          border: 1px solid rgba(0, 229, 255, 0.08);
+          background: rgba(2, 4, 8, 0.35);
+          padding: 1.1rem 1.25rem;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
+
         @media (max-width: 768px) {
           .contact-grid {
             grid-template-columns: 1fr !important;
             gap: 2rem !important;
+          }
+
+          .site-footer-inner {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            width: 100%;
           }
         }
       `}</style>

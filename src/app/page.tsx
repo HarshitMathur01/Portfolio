@@ -14,13 +14,13 @@ const EasterEgg = dynamic(() => import('@/components/sections/EasterEgg'), { ssr
 
 // Sections — Hero loads immediately, rest are lazy
 import Hero from '@/components/sections/Hero';
-const About = dynamic(() => import('@/components/sections/About'));
-const Skills = dynamic(() => import('@/components/sections/Skills'));
-const Projects = dynamic(() => import('@/components/sections/Projects'));
-const Timeline = dynamic(() => import('@/components/sections/Timeline'));
-const Achievements = dynamic(() => import('@/components/sections/Achievements'));
-const Blog = dynamic(() => import('@/components/sections/Blog'));
-const Contact = dynamic(() => import('@/components/sections/Contact'));
+const About = dynamic(() => import('@/components/sections/About'), { ssr: false });
+const Skills = dynamic(() => import('@/components/sections/Skills'), { ssr: false });
+const Projects = dynamic(() => import('@/components/sections/Projects'), { ssr: false });
+const Timeline = dynamic(() => import('@/components/sections/Timeline'), { ssr: false });
+const Achievements = dynamic(() => import('@/components/sections/Achievements'), { ssr: false });
+const Blog = dynamic(() => import('@/components/sections/Blog'), { ssr: false });
+const Contact = dynamic(() => import('@/components/sections/Contact'), { ssr: false });
 
 export default function Home() {
   const mainRef = useRef<HTMLDivElement>(null);

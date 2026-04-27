@@ -268,8 +268,8 @@ and currently building a startup (MindMitra — stay tuned).
 
 **Right: Stats cards** (dark panel, subtle neon border):
 ```
-[ 8.91   ]  [ 500+   ]  [ 2      ]
-[ CGPA   ]  [ PROBLEMS] [ PAPERS ]
+[ 8.91   ]  [ 700+   ]  [ 4      ]
+[ CGPA   ]  [ PROBLEMS] [ Hackathon Wins ]
 
 [ 1461   ]  [ 3★     ]  [ 3      ]
 [ CF RANK]  [ CODECHEF] [ INTER IIT]

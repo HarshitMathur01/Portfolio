@@ -92,7 +92,7 @@ export default function About() {
         className="about-grid"
       >
         {/* Left: Quote + Bio */}
-        <div>
+        <div className="about-left">
           <TextReveal
             as="p"
             style={{
@@ -110,24 +110,133 @@ export default function About() {
           </TextReveal>
 
           <div
+            className="about-bio"
             style={{
               fontFamily: 'var(--font-space-mono), monospace',
               fontSize: '0.9rem',
               color: 'var(--text-secondary)',
               lineHeight: 2,
               maxWidth: '550px',
-              opacity: inView ? 1 : 0,
-              transition: 'opacity 0.8s ease 0.3s',
+              opacity: 1,
+              transform: inView ? 'translateY(0)' : 'translateY(10px)',
+              transition: 'transform 0.8s ease 0.25s',
             }}
           >
             <p>
-              ECE student at IIT (ISM) Dhanbad (CGPA 8.91). Researcher at IIT Roorkee.
-              Passionate about computer vision, LLMs, and shipping products that matter.
+            I’m an ECE undergraduate at IIT (ISM) Dhanbad working at the intersection of computer vision, LLMs, and real-world AI systems.
             </p>
             <p style={{ marginTop: '1rem' }}>
-              Also: Volleyball team captain, competitive programmer (500+ problems),
-              and currently building a startup (MindMitra — stay tuned).
+            I care about taking ideas beyond notebooks — designing pipelines, solving messy data problems, and shipping things that actually work.
             </p>
+            <p style={{ marginTop: '1rem' }}>
+            Outside of tech, I lead on the volleyball court, think competitively (600+ problems solved), and I’m currently building something of my own — MindMitra.
+            
+            </p>
+            <p style={{ marginTop: '1.65rem' }}>
+            
+            </p>
+
+          </div>
+
+          {/* MindMitra Stealth Teaser (kept inside left column to avoid dead space) */}
+          <div
+            className="mindmitra-teaser"
+            style={{
+              marginTop: '2.5rem',
+              border: '1px solid var(--border-subtle)',
+              background: 'var(--bg-surface)',
+              padding: '2rem',
+              maxWidth: '560px',
+              opacity: 1,
+              transform: inView ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'transform 0.8s ease 0.4s',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Subtle animated border glow */}
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '2px',
+                background: 'linear-gradient(90deg, transparent, var(--neon-purple), transparent)',
+                animation: 'scanMove 4s ease-in-out infinite',
+              }}
+            />
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+              <span
+                style={{
+                  fontSize: '1.2rem',
+                  animation: 'pulse-cyan 2s ease-in-out infinite',
+                  display: 'inline-block',
+                }}
+              >
+                ◈
+              </span>
+              <span
+                style={{
+                  fontFamily: 'var(--font-syne), sans-serif',
+                  fontWeight: 700,
+                  fontSize: '1.1rem',
+                  color: 'var(--text-primary)',
+                  letterSpacing: '0.1em',
+                }}
+              >
+                {startup.name.toUpperCase()}
+              </span>
+            </div>
+
+            <p
+              style={{
+                fontFamily: 'var(--font-space-mono), monospace',
+                fontSize: '0.8rem',
+                color: 'var(--text-secondary)',
+                lineHeight: 1.7,
+                marginBottom: '1.25rem',
+              }}
+            >
+              AI-powered mental health platform for youth. Building the infrastructure for emotional intelligence at scale.
+            </p>
+
+            {/* Progress bar */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div
+                style={{
+                  flex: 1,
+                  height: '4px',
+                  background: 'var(--bg-elevated)',
+                  borderRadius: '2px',
+                  overflow: 'hidden',
+                }}
+              >
+                <div
+                  style={{
+                    height: '100%',
+                    width: `${progressWidth}%`,
+                    background: 'linear-gradient(90deg, var(--neon-purple), var(--neon-cyan))',
+                    transition: 'width 2s ease',
+                    borderRadius: '2px',
+                    boxShadow: '0 0 10px var(--glow-purple)',
+                  }}
+                />
+              </div>
+              <span
+                style={{
+                  fontFamily: 'var(--font-space-mono), monospace',
+                  fontSize: '0.65rem',
+                  letterSpacing: '0.12em',
+                  color: 'var(--neon-purple)',
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                [STEALTH]
+              </span>
+            </div>
           </div>
         </div>
 
@@ -139,25 +248,29 @@ export default function About() {
             style={{
               position: 'relative',
               overflow: 'hidden',
-              opacity: inView ? 1 : 0,
-              transform: inView ? 'translateY(0)' : 'translateY(18px)',
-              transition: 'opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s',
+              opacity: 1,
+              transform: inView ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'transform 0.8s ease 0.15s',
             }}
           >
             <div className="scanline-overlay" />
-            <Image
-              src="/photo-hm.jpg"
-              alt="Harshit Mathur"
-              width={900}
-              height={1100}
-              priority={false}
-              style={{
-                width: '100%',
-                height: 'auto',
-                display: 'block',
-                filter: 'saturate(0.95) contrast(1.05)',
-              }}
-            />
+            <div className="about-portrait-media">
+              <Image
+                src="/photo-hm.jpg"
+                alt="Harshit Mathur"
+                fill
+                sizes="(max-width: 768px) 100vw, 40vw"
+                priority={false}
+                style={{
+                  objectFit: 'cover',
+                  objectPosition: '50% 35%',
+                  filter: 'saturate(0.9) contrast(1.08)',
+                  opacity: 0.92,
+                }}
+              />
+              <div className="about-portrait-tint" />
+              <div className="about-portrait-vignette" />
+            </div>
 
             {/* Subtle corner label */}
             <div
@@ -182,15 +295,16 @@ export default function About() {
 
           {/* Stats Grid */}
           <div
+            className="about-stats"
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
               gap: '1px',
               background: 'var(--border-subtle)',
               border: '1px solid var(--border-subtle)',
-              opacity: inView ? 1 : 0,
-              transform: inView ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s',
+              opacity: 1,
+              transform: inView ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'transform 0.8s ease 0.2s',
             }}
           >
             {stats.map((stat, i) => (
@@ -238,106 +352,12 @@ export default function About() {
         </div>
       </div>
 
-      {/* MindMitra Stealth Teaser */}
-      <div
-        style={{
-          marginTop: '4rem',
-          border: '1px solid var(--border-subtle)',
-          background: 'var(--bg-surface)',
-          padding: '2rem',
-          maxWidth: '500px',
-          opacity: inView ? 1 : 0,
-          transform: inView ? 'translateY(0)' : 'translateY(20px)',
-          transition: 'opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Subtle animated border glow */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '2px',
-            background: 'linear-gradient(90deg, transparent, var(--neon-purple), transparent)',
-            animation: 'scanMove 4s ease-in-out infinite',
-          }}
-        />
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-          <span
-            style={{
-              fontSize: '1.2rem',
-              animation: 'pulse-cyan 2s ease-in-out infinite',
-              display: 'inline-block',
-            }}
-          >
-            ◈
-          </span>
-          <span
-            style={{
-              fontFamily: 'var(--font-syne), sans-serif',
-              fontWeight: 700,
-              fontSize: '1.1rem',
-              color: 'var(--text-primary)',
-              letterSpacing: '0.1em',
-            }}
-          >
-            {startup.name.toUpperCase()}
-          </span>
-        </div>
-
-        <p
-          style={{
-            fontFamily: 'var(--font-space-mono), monospace',
-            fontSize: '0.8rem',
-            color: 'var(--text-secondary)',
-            lineHeight: 1.7,
-            marginBottom: '1.25rem',
-          }}
-        >
-          AI-powered mental health platform for youth. Building the infrastructure for emotional intelligence at scale.
-        </p>
-
-        {/* Progress bar */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div
-            style={{
-              flex: 1,
-              height: '4px',
-              background: 'var(--bg-elevated)',
-              borderRadius: '2px',
-              overflow: 'hidden',
-            }}
-          >
-            <div
-              style={{
-                height: '100%',
-                width: `${progressWidth}%`,
-                background: 'linear-gradient(90deg, var(--neon-purple), var(--neon-cyan))',
-                transition: 'width 2s ease',
-                borderRadius: '2px',
-                boxShadow: '0 0 10px var(--glow-purple)',
-              }}
-            />
-          </div>
-          <span
-            style={{
-              fontFamily: 'var(--font-space-mono), monospace',
-              fontSize: '0.65rem',
-              letterSpacing: '0.12em',
-              color: 'var(--neon-purple)',
-              textTransform: 'uppercase',
-            }}
-          >
-            [STEALTH]
-          </span>
-        </div>
-      </div>
-
       <style jsx>{`
+        .about-left {
+          display: flex;
+          flex-direction: column;
+        }
+
         .about-right {
           display: flex;
           flex-direction: column;
@@ -349,10 +369,52 @@ export default function About() {
           box-shadow: 0 0 24px rgba(0, 229, 255, 0.06);
         }
 
+        .about-portrait-media {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4 / 5;
+          max-height: 460px;
+          background: radial-gradient(ellipse at 30% 20%, rgba(0, 229, 255, 0.08) 0%, transparent 55%),
+            radial-gradient(ellipse at 70% 65%, rgba(123, 47, 255, 0.06) 0%, transparent 60%),
+            var(--bg-elevated);
+        }
+
+        .about-portrait-tint {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            135deg,
+            rgba(0, 229, 255, 0.08) 0%,
+            rgba(123, 47, 255, 0.06) 55%,
+            rgba(2, 4, 8, 0.35) 100%
+          );
+          mix-blend-mode: color;
+          pointer-events: none;
+        }
+
+        .about-portrait-vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(2, 4, 8, 0.55) 100%);
+          pointer-events: none;
+        }
+
         @media (max-width: 768px) {
           .about-grid {
             grid-template-columns: 1fr !important;
             gap: 2rem !important;
+          }
+
+          .about-stats {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+
+          .mindmitra-teaser {
+            max-width: none !important;
+          }
+
+          .about-portrait-media {
+            max-height: none;
           }
         }
       `}</style>
